@@ -1,6 +1,6 @@
 [project]
 name = "input_stats"
-version = "1.0"
+version = "0.0.1"
 description = "Home Assistant custom component to create a custom input number with stats support"
 authors = [
   { name = "Miguel Ángel López", email = "miguel.angel.lopez.vicente@gmail.com" },
