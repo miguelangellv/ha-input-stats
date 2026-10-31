@@ -1,25 +1,39 @@
-[tool.poetry]
+[project]
 name = "input_stats"
 version = "1.0"
 description = "Home Assistant custom component to create a custom input number with stats support"
-authors = ["Miguel Ángel López <miguel.angel.lopez.vicente@gmail.com>"]
-license = "MIT"
+authors = [
+  { name = "Miguel Ángel López", email = "miguel.angel.lopez.vicente@gmail.com" },
+]
+license = { text = "MIT" }
 readme = "README.md"
-repository = "https://github.com/miguelangellv/ha-input-stats"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "homeassistant>=2024.2.0",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.11,<3.13"
-homeassistant = ">=2024.2.0"
+[project.urls]
+Repository = "https://github.com/miguelangellv/ha-input-stats"
 
-[tool.poetry.group.dev.dependencies]
-pre-commit = "3.6.2"
-pre-commit-hooks = "4.5.0"
-pylint = "3.1.0"
-ruff = "0.3.4"
+[dependency-groups]
+dev = [
+  "pre-commit==3.6.2",
+  "pre-commit-hooks==4.5.0",
+  "pylint==3.1.0",
+  "ruff==0.3.4",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["custom_components/input_stats"]
+
+[tool.uv]
+# This is a Home Assistant custom component: it is copied into Home Assistant,
+# not installed as a Python package.
+package = false
 
 [tool.ruff]
 src = ["custom_components/input_stats"]

@@ -1,2 +1,6 @@
 __pycache__
 .idea
+.venv
+.ruff_cache
+.pytest_cache
+dist

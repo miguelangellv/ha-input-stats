@@ -3,11 +3,7 @@ name: Pylint
 
 on:
   pull_request:
-  push:
   workflow_dispatch:
-
-env:
-  DEFAULT_PYTHON: "3.11"
 
 jobs:
   pylint:
@@ -15,19 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.2.2
 
-      - name: 🏗 Set up Poetry
-        run: pipx install poetry
-
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
-        uses: actions/setup-python@v5.0.0
+      - name: 🔧 Load project variables
+        uses: cardinalby/export-env-action@v2
         with:
+          envFile: .github/project.env
+
+      - name: 🏗 Set up uv
+        uses: astral-sh/setup-uv@v5.3.1
+        with:
+          enable-cache: true
           python-version: ${{ env.DEFAULT_PYTHON }}
-          cache: "poetry"
 
-      - name: 🏗 Install Python dependencies
-        run: poetry install --no-interaction
+      - name: 🏗 Install dependencies
+        run: uv sync --frozen --all-groups
 
-      - name: 🚀 Run Pylint
-        run: poetry run pylint custom_components/input_stats
+      - name: 🚀 Run pylint
+        run: uv run pre-commit run pylint --all-files
