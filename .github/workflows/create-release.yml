@@ -134,9 +134,10 @@ jobs:
           # Copiar archivos de la integración
           cp -r "$INTEGRATION_DIR"/* "/tmp/${INTEGRATION_DOMAIN}/"
 
-          # Crear archivo zip
-          cd /tmp
-          zip -r "${INTEGRATION_DOMAIN}.zip" "${INTEGRATION_DOMAIN}/"
+          # Crear archivo zip con los archivos en la raíz (sin la carpeta):
+          # HACS (zip_release) lo extrae directamente en custom_components/<dominio>/
+          cd "/tmp/${INTEGRATION_DOMAIN}"
+          zip -r "/tmp/${INTEGRATION_DOMAIN}.zip" .
 
           echo "✅ Archive created: ${INTEGRATION_DOMAIN}.zip"
 
